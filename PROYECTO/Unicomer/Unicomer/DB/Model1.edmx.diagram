@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="25fba15ac18f404491a2052d3986db6f" Name="Diagram1">
+        <EntityTypeShape EntityType="UNICOMERModel.COLOR" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UNICOMERModel.MATERIAL" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UNICOMERModel.MODEL" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UNICOMERModel.POLICY" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UNICOMERModel.PRODUCT" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="UNICOMERModel.STORE" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="UNICOMERModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UNICOMERModel.TRANSACTION_TYPE" Width="1.5" PointX="0.75" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UNICOMERModel.UPC" Width="1.5" PointX="0.75" PointY="19.25" IsExpanded="true" />
+        <AssociationConnector Association="UNICOMERModel.FK_PRODUCT_COLOR" ManuallyRouted="false" />
+        <AssociationConnector Association="UNICOMERModel.FK_PRODUCT_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="UNICOMERModel.FK_PRODUCT_Model" ManuallyRouted="false" />
+        <AssociationConnector Association="UNICOMERModel.FK_PRODUCT_POLICY" ManuallyRouted="false" />
+        <AssociationConnector Association="UNICOMERModel.FK_PRODUCT_STORE1" ManuallyRouted="false" />
+        <AssociationConnector Association="UNICOMERModel.FK_PRODUCT_STORE2" ManuallyRouted="false" />
+        <AssociationConnector Association="UNICOMERModel.FK_PRODUCT_TRANSACTION_TYPE" ManuallyRouted="false" />
+        <AssociationConnector Association="UNICOMERModel.FK_PRODUCT_UPC" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="UNICOMERModel.vwProduct" Width="1.5" PointX="5.375" PointY="3.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

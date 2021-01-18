@@ -1,0 +1,656 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="UNICOMERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="COLOR">
+          <Key>
+            <PropertyRef Name="IdColor" />
+          </Key>
+          <Property Name="IdColor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="InsertDate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MATERIAL">
+          <Key>
+            <PropertyRef Name="IdMaterial" />
+          </Key>
+          <Property Name="IdMaterial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="InsertDate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MODEL">
+          <Key>
+            <PropertyRef Name="IdModel" />
+          </Key>
+          <Property Name="IdModel" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="InsertDate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="UserInsert" Type="int" />
+        </EntityType>
+        <EntityType Name="POLICY">
+          <Key>
+            <PropertyRef Name="IdPolicy" />
+          </Key>
+          <Property Name="IdPolicy" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="InsertDate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdStoreLoadProduct" Type="int" />
+          <Property Name="IdStoreDownLoadProduct" Type="int" />
+          <Property Name="IdColor" Type="int" />
+          <Property Name="IdMaterial" Type="int" />
+          <Property Name="IdPolicy" Type="int" />
+          <Property Name="IdTransactionType" Type="int" />
+          <Property Name="IdUpc" Type="int" />
+          <Property Name="IdModel" Type="int" />
+          <Property Name="InsertDate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="UserInsert" Type="int" />
+        </EntityType>
+        <EntityType Name="STORE">
+          <Key>
+            <PropertyRef Name="IdStore" />
+          </Key>
+          <Property Name="IdStore" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Direction" Type="varchar" MaxLength="200" />
+          <Property Name="phone1" Type="varchar" MaxLength="10" />
+          <Property Name="phone2" Type="varchar" MaxLength="10" />
+          <Property Name="InsertDate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TRANSACTION_TYPE">
+          <Key>
+            <PropertyRef Name="IdTransactionType" />
+          </Key>
+          <Property Name="IdTransactionType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="InsertDate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UPC">
+          <Key>
+            <PropertyRef Name="IdUpc" />
+          </Key>
+          <Property Name="IdUpc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UPC" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="InsertDate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="UserInsert" Type="int" />
+          <Property Name="IdPolicy" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UNICOMER.dbo.vwProduct' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwProduct">
+          <Key>
+            <PropertyRef Name="ESTADOTRANSACCION" />
+          </Key>
+          <Property Name="ESTADOTRANSACCION" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UPC" Type="varchar" MaxLength="50" />
+          <Property Name="TIENDA_CARGOPRODINICIALMENTE" Type="varchar" MaxLength="100" />
+          <Property Name="TIENDA_MOVIOPRODUCTO" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_PRODUCT_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="IdColor" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdColor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_MATERIAL">
+          <End Role="MATERIAL" Type="Self.MATERIAL" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MATERIAL">
+              <PropertyRef Name="IdMaterial" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_Model">
+          <End Role="MODEL" Type="Self.MODEL" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MODEL">
+              <PropertyRef Name="IdModel" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdModel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_POLICY">
+          <End Role="POLICY" Type="Self.POLICY" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POLICY">
+              <PropertyRef Name="IdPolicy" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdPolicy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_STORE1">
+          <End Role="STORE" Type="Self.STORE" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STORE">
+              <PropertyRef Name="IdStore" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdStoreDownLoadProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_STORE2">
+          <End Role="STORE" Type="Self.STORE" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STORE">
+              <PropertyRef Name="IdStore" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdStoreLoadProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_TRANSACTION_TYPE">
+          <End Role="TRANSACTION_TYPE" Type="Self.TRANSACTION_TYPE" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTION_TYPE">
+              <PropertyRef Name="IdTransactionType" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdTransactionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_UPC">
+          <End Role="UPC" Type="Self.UPC" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UPC">
+              <PropertyRef Name="IdUpc" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdUpc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UNICOMERModelStoreContainer">
+          <EntitySet Name="COLOR" EntityType="Self.COLOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MATERIAL" EntityType="Self.MATERIAL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MODEL" EntityType="Self.MODEL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="POLICY" EntityType="Self.POLICY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT" EntityType="Self.PRODUCT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STORE" EntityType="Self.STORE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRANSACTION_TYPE" EntityType="Self.TRANSACTION_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UPC" EntityType="Self.UPC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwProduct" EntityType="Self.vwProduct" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwProduct].[ESTADOTRANSACCION] AS [ESTADOTRANSACCION], 
+    [vwProduct].[UPC] AS [UPC], 
+    [vwProduct].[TIENDA_CARGOPRODINICIALMENTE] AS [TIENDA_CARGOPRODINICIALMENTE], 
+    [vwProduct].[TIENDA_MOVIOPRODUCTO] AS [TIENDA_MOVIOPRODUCTO]
+    FROM [dbo].[vwProduct] AS [vwProduct]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_PRODUCT_COLOR" Association="Self.FK_PRODUCT_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_MATERIAL" Association="Self.FK_PRODUCT_MATERIAL">
+            <End Role="MATERIAL" EntitySet="MATERIAL" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_Model" Association="Self.FK_PRODUCT_Model">
+            <End Role="MODEL" EntitySet="MODEL" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_POLICY" Association="Self.FK_PRODUCT_POLICY">
+            <End Role="POLICY" EntitySet="POLICY" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_STORE1" Association="Self.FK_PRODUCT_STORE1">
+            <End Role="STORE" EntitySet="STORE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_STORE2" Association="Self.FK_PRODUCT_STORE2">
+            <End Role="STORE" EntitySet="STORE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_TRANSACTION_TYPE" Association="Self.FK_PRODUCT_TRANSACTION_TYPE">
+            <End Role="TRANSACTION_TYPE" EntitySet="TRANSACTION_TYPE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_UPC" Association="Self.FK_PRODUCT_UPC">
+            <End Role="UPC" EntitySet="UPC" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UNICOMERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="COLOR">
+          <Key>
+            <PropertyRef Name="IdColor" />
+          </Key>
+          <Property Name="IdColor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="InsertDate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_COLOR" FromRole="COLOR" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="MATERIAL">
+          <Key>
+            <PropertyRef Name="IdMaterial" />
+          </Key>
+          <Property Name="IdMaterial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="InsertDate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_MATERIAL" FromRole="MATERIAL" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="MODEL">
+          <Key>
+            <PropertyRef Name="IdModel" />
+          </Key>
+          <Property Name="IdModel" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="InsertDate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <Property Name="UserInsert" Type="Int32" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_Model" FromRole="MODEL" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="POLICY">
+          <Key>
+            <PropertyRef Name="IdPolicy" />
+          </Key>
+          <Property Name="IdPolicy" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="InsertDate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_POLICY" FromRole="POLICY" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdStoreLoadProduct" Type="Int32" />
+          <Property Name="IdStoreDownLoadProduct" Type="Int32" />
+          <Property Name="IdColor" Type="Int32" />
+          <Property Name="IdMaterial" Type="Int32" />
+          <Property Name="IdPolicy" Type="Int32" />
+          <Property Name="IdTransactionType" Type="Int32" />
+          <Property Name="IdUpc" Type="Int32" />
+          <Property Name="IdModel" Type="Int32" />
+          <Property Name="InsertDate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <Property Name="UserInsert" Type="Int32" />
+          <NavigationProperty Name="COLOR" Relationship="Self.FK_PRODUCT_COLOR" FromRole="PRODUCT" ToRole="COLOR" />
+          <NavigationProperty Name="MATERIAL" Relationship="Self.FK_PRODUCT_MATERIAL" FromRole="PRODUCT" ToRole="MATERIAL" />
+          <NavigationProperty Name="MODEL" Relationship="Self.FK_PRODUCT_Model" FromRole="PRODUCT" ToRole="MODEL" />
+          <NavigationProperty Name="POLICY" Relationship="Self.FK_PRODUCT_POLICY" FromRole="PRODUCT" ToRole="POLICY" />
+          <NavigationProperty Name="STORE" Relationship="Self.FK_PRODUCT_STORE1" FromRole="PRODUCT" ToRole="STORE" />
+          <NavigationProperty Name="STORE1" Relationship="Self.FK_PRODUCT_STORE2" FromRole="PRODUCT" ToRole="STORE" />
+          <NavigationProperty Name="TRANSACTION_TYPE" Relationship="Self.FK_PRODUCT_TRANSACTION_TYPE" FromRole="PRODUCT" ToRole="TRANSACTION_TYPE" />
+          <NavigationProperty Name="UPC" Relationship="Self.FK_PRODUCT_UPC" FromRole="PRODUCT" ToRole="UPC" />
+        </EntityType>
+        <EntityType Name="STORE">
+          <Key>
+            <PropertyRef Name="IdStore" />
+          </Key>
+          <Property Name="IdStore" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direction" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="phone1" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="phone2" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="InsertDate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_STORE1" FromRole="STORE" ToRole="PRODUCT" />
+          <NavigationProperty Name="PRODUCT1" Relationship="Self.FK_PRODUCT_STORE2" FromRole="STORE" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TRANSACTION_TYPE">
+          <Key>
+            <PropertyRef Name="IdTransactionType" />
+          </Key>
+          <Property Name="IdTransactionType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="InsertDate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_TRANSACTION_TYPE" FromRole="TRANSACTION_TYPE" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="UPC">
+          <Key>
+            <PropertyRef Name="IdUpc" />
+          </Key>
+          <Property Name="IdUpc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UPC1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="InsertDate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <Property Name="UserInsert" Type="Int32" />
+          <Property Name="IdPolicy" Type="Int32" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_UPC" FromRole="UPC" ToRole="PRODUCT" />
+        </EntityType>
+        <Association Name="FK_PRODUCT_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="IdColor" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdColor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_MATERIAL">
+          <End Role="MATERIAL" Type="Self.MATERIAL" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MATERIAL">
+              <PropertyRef Name="IdMaterial" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_Model">
+          <End Role="MODEL" Type="Self.MODEL" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MODEL">
+              <PropertyRef Name="IdModel" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdModel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_POLICY">
+          <End Role="POLICY" Type="Self.POLICY" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POLICY">
+              <PropertyRef Name="IdPolicy" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdPolicy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_STORE1">
+          <End Role="STORE" Type="Self.STORE" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STORE">
+              <PropertyRef Name="IdStore" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdStoreDownLoadProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_STORE2">
+          <End Role="STORE" Type="Self.STORE" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STORE">
+              <PropertyRef Name="IdStore" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdStoreLoadProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_TRANSACTION_TYPE">
+          <End Role="TRANSACTION_TYPE" Type="Self.TRANSACTION_TYPE" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTION_TYPE">
+              <PropertyRef Name="IdTransactionType" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdTransactionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_UPC">
+          <End Role="UPC" Type="Self.UPC" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UPC">
+              <PropertyRef Name="IdUpc" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IdUpc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UNICOMEREntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="COLOR" EntityType="Self.COLOR" />
+          <EntitySet Name="MATERIAL" EntityType="Self.MATERIAL" />
+          <EntitySet Name="MODEL" EntityType="Self.MODEL" />
+          <EntitySet Name="POLICY" EntityType="Self.POLICY" />
+          <EntitySet Name="PRODUCT" EntityType="Self.PRODUCT" />
+          <EntitySet Name="STORE" EntityType="Self.STORE" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TRANSACTION_TYPE" EntityType="Self.TRANSACTION_TYPE" />
+          <EntitySet Name="UPC" EntityType="Self.UPC" />
+          <AssociationSet Name="FK_PRODUCT_COLOR" Association="Self.FK_PRODUCT_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_MATERIAL" Association="Self.FK_PRODUCT_MATERIAL">
+            <End Role="MATERIAL" EntitySet="MATERIAL" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_Model" Association="Self.FK_PRODUCT_Model">
+            <End Role="MODEL" EntitySet="MODEL" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_POLICY" Association="Self.FK_PRODUCT_POLICY">
+            <End Role="POLICY" EntitySet="POLICY" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_STORE1" Association="Self.FK_PRODUCT_STORE1">
+            <End Role="STORE" EntitySet="STORE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_STORE2" Association="Self.FK_PRODUCT_STORE2">
+            <End Role="STORE" EntitySet="STORE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_TRANSACTION_TYPE" Association="Self.FK_PRODUCT_TRANSACTION_TYPE">
+            <End Role="TRANSACTION_TYPE" EntitySet="TRANSACTION_TYPE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_UPC" Association="Self.FK_PRODUCT_UPC">
+            <End Role="UPC" EntitySet="UPC" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <EntitySet Name="vwProduct" EntityType="UNICOMERModel.vwProduct" />
+        </EntityContainer>
+        <EntityType Name="vwProduct">
+          <Key>
+            <PropertyRef Name="ESTADOTRANSACCION" />
+          </Key>
+          <Property Name="ESTADOTRANSACCION" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UPC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TIENDA_CARGOPRODINICIALMENTE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TIENDA_MOVIOPRODUCTO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UNICOMERModelStoreContainer" CdmEntityContainer="UNICOMEREntities">
+          <EntitySetMapping Name="COLOR">
+            <EntityTypeMapping TypeName="UNICOMERModel.COLOR">
+              <MappingFragment StoreEntitySet="COLOR">
+                <ScalarProperty Name="IdColor" ColumnName="IdColor" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MATERIAL">
+            <EntityTypeMapping TypeName="UNICOMERModel.MATERIAL">
+              <MappingFragment StoreEntitySet="MATERIAL">
+                <ScalarProperty Name="IdMaterial" ColumnName="IdMaterial" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MODEL">
+            <EntityTypeMapping TypeName="UNICOMERModel.MODEL">
+              <MappingFragment StoreEntitySet="MODEL">
+                <ScalarProperty Name="IdModel" ColumnName="IdModel" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+                <ScalarProperty Name="UserInsert" ColumnName="UserInsert" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="POLICY">
+            <EntityTypeMapping TypeName="UNICOMERModel.POLICY">
+              <MappingFragment StoreEntitySet="POLICY">
+                <ScalarProperty Name="IdPolicy" ColumnName="IdPolicy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCT">
+            <EntityTypeMapping TypeName="UNICOMERModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCT">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="IdStoreLoadProduct" ColumnName="IdStoreLoadProduct" />
+                <ScalarProperty Name="IdStoreDownLoadProduct" ColumnName="IdStoreDownLoadProduct" />
+                <ScalarProperty Name="IdColor" ColumnName="IdColor" />
+                <ScalarProperty Name="IdMaterial" ColumnName="IdMaterial" />
+                <ScalarProperty Name="IdPolicy" ColumnName="IdPolicy" />
+                <ScalarProperty Name="IdTransactionType" ColumnName="IdTransactionType" />
+                <ScalarProperty Name="IdUpc" ColumnName="IdUpc" />
+                <ScalarProperty Name="IdModel" ColumnName="IdModel" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+                <ScalarProperty Name="UserInsert" ColumnName="UserInsert" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STORE">
+            <EntityTypeMapping TypeName="UNICOMERModel.STORE">
+              <MappingFragment StoreEntitySet="STORE">
+                <ScalarProperty Name="IdStore" ColumnName="IdStore" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+                <ScalarProperty Name="phone1" ColumnName="phone1" />
+                <ScalarProperty Name="phone2" ColumnName="phone2" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="UNICOMERModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACTION_TYPE">
+            <EntityTypeMapping TypeName="UNICOMERModel.TRANSACTION_TYPE">
+              <MappingFragment StoreEntitySet="TRANSACTION_TYPE">
+                <ScalarProperty Name="IdTransactionType" ColumnName="IdTransactionType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UPC">
+            <EntityTypeMapping TypeName="UNICOMERModel.UPC">
+              <MappingFragment StoreEntitySet="UPC">
+                <ScalarProperty Name="IdUpc" ColumnName="IdUpc" />
+                <ScalarProperty Name="UPC1" ColumnName="UPC" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+                <ScalarProperty Name="UserInsert" ColumnName="UserInsert" />
+                <ScalarProperty Name="IdPolicy" ColumnName="IdPolicy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwProduct">
+            <EntityTypeMapping TypeName="UNICOMERModel.vwProduct">
+              <MappingFragment StoreEntitySet="vwProduct">
+                <ScalarProperty Name="TIENDA_MOVIOPRODUCTO" ColumnName="TIENDA_MOVIOPRODUCTO" />
+                <ScalarProperty Name="TIENDA_CARGOPRODINICIALMENTE" ColumnName="TIENDA_CARGOPRODINICIALMENTE" />
+                <ScalarProperty Name="UPC" ColumnName="UPC" />
+                <ScalarProperty Name="ESTADOTRANSACCION" ColumnName="ESTADOTRANSACCION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
